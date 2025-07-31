@@ -10,13 +10,15 @@ class View
     private static $data = [];
     private static $layout = null;
 
+
     /**
      * Set the views directory path
      */
     public static function setViewsPath($path)
     {
         self::$viewsPath = rtrim($path, '/') . '/';
-        echo "<!-- Views path set to: " . self::$viewsPath . " -->\n";
+        $msg = "Viewspath set to " . self::$viewsPath;
+        self::log('warning', $msg);
     }
 
     /**
@@ -106,20 +108,6 @@ class View
     }
 
     /**
-     * Set data for the next view only
-     */
-    public static function with($key, $value = null)
-    {
-        if (is_array($key)) {
-            self::$data = array_merge(self::$data, $key);
-        } else {
-            self::$data[$key] = $value;
-        }
-
-        return new self();
-    }
-
-    /**
      * Debug method to check paths and files
      */
     public static function debug()
@@ -141,7 +129,35 @@ class View
             echo "</ul>";
         }
     }
+
+    /**
+     * Log method for loggin info and error
+     * @param string $level - info|error
+     * @param string $messge content of message
+     * @return void
+     */
+    private static function log($level, $messge)
+    {
+        if ($level === "info") {
+            echo "<div class='alert alert-info alert-dismissible fade show' role='alert'>";
+            echo "<span> $messge</span>";
+            echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+            echo "</div>";
+        } elseif ($level === "error") {
+            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+            echo "<span> $messge</span>";
+            echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+            echo "</div>";
+        } elseif ($level === "warning") {
+            echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>";
+            echo "<span> $messge</span>";
+            echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+            echo "</div>";
+        }
+    }
 }
+
+
 
 /**
  * Global helper function for rendering views

@@ -25,7 +25,6 @@ class View
     public static function setLayout($layout)
     {
         self::$layout = $layout;
-        echo "<!-- Default layout set to: " . $layout . " -->\n";
     }
 
     /**
@@ -34,8 +33,6 @@ class View
     public static function render($template, $data = [], $layout = null)
     {
         try {
-            echo "<!-- Rendering template: $template -->\n";
-
             // Merge with any previously set data
             $viewData = array_merge(self::$data, $data);
             echo "<!-- View data: " . print_r($viewData, true) . " -->\n";
@@ -51,8 +48,6 @@ class View
             if (!file_exists($templatePath)) {
                 throw new Exception("View template not found: {$templatePath}");
             }
-            echo "<!-- Template exists -->\n";
-
             // Extract data variables for use in template
             extract($viewData);
 
@@ -64,14 +59,11 @@ class View
 
             // Get the main content
             $content = ob_get_clean();
-            echo "<!-- Content length: " . strlen($content) . " -->\n";
 
             // If layout is specified (or default layout exists), wrap content in layout
             $layoutToUse = $layout ?? self::$layout;
             if ($layoutToUse) {
-                echo "<!-- Using layout: $layoutToUse -->\n";
                 $layoutPath = self::$viewsPath . $layoutToUse . '.php';
-                echo "<!-- Layout path: $layoutPath -->\n";
 
                 if (!file_exists($layoutPath)) {
                     throw new Exception("Layout template not found: {$layoutPath}");
@@ -87,11 +79,9 @@ class View
                 // Get the final output
                 $output = ob_get_clean();
             } else {
-                echo "<!-- No layout used -->\n";
                 $output = $content;
             }
 
-            echo "<!-- Final output length: " . strlen($output) . " -->\n";
             return $output;
         } catch (Exception $e) {
             echo "<h1>View Error</h1>";

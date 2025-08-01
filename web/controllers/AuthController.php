@@ -27,8 +27,8 @@ class AuthController
 
                 if ($result === false) {
                     if (str_contains($http_response_header[0], "401 Unauthorized")) {
-                        $_SESSION["message"] = ["error" => "Wrong username or password"];
                         header("location: /login");
+                        $_SESSION["message"] = ["error" => "Wrong username or password"];
                         exit(1);
                     } else {
                         http_response_code(500);

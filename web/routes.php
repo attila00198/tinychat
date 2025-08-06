@@ -10,19 +10,13 @@ $router->get('/about', function () {
 });
 
 $router->get('/contact', function () {
-    return view('contact',["title" => "Contact"]);
+    return view('contact', ["title" => "Contact"]);
 });
 
 // Routes with parameters
 $router->get('/user/{id}', function ($id) {
-    echo "<h1>User Profile</h1>";
-    echo "<p>User ID: " . htmlspecialchars($id) . "</p>";
-});
-
-$router->get('/user/{id}/posts/{postId}', function ($id, $postId) {
-    echo "<h1>User Post</h1>";
-    echo "<p>User ID: " . htmlspecialchars($id) . "</p>";
-    echo "<p>Post ID: " . htmlspecialchars($postId) . "</p>";
+    $user = AuthController::getUser($id);
+    return view("profile", ["title" => "Profile", "user" => $user]);
 });
 
 // GET routes
@@ -42,6 +36,7 @@ $router->post('/login', function () {
 $router->post('/register', function () {
     echo "<h1>Register POST</h1>";
     echo "<p>Processing registration...</p>";
+    //AuthController::register();
 });
 
 $router->get("/logout", function () {

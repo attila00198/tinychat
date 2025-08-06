@@ -1,0 +1,4 @@
+*.log
+run.sh
+api/__pycache__/
+api/.venv/

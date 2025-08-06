@@ -67,4 +67,21 @@ class AuthController
             exit(1);
         }
     }
+
+    public static function register(string $username, string $password, string $email): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($username) || empty($password) || empty($email)) {
+                $_SESSION["flash"] = ["error" => "All maked fields are required."];
+            }
+
+            // TODO: Implemet sending userdata to database.
+            $_SESSION["flash"] = ["info" => "You are registered as " . $username];
+        }
+    }
+
+    public static function getUser(string $access_key): array
+    {
+        return [];
+    }
 }

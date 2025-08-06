@@ -45,9 +45,6 @@ dumy_user_db = {
     },
 }
 
-for user in dumy_user_db.values():
-    print(user.get("username"))
-
 
 def create_jwt(u_name: str) -> str:
     payload = {
@@ -68,6 +65,11 @@ def verify_jwt(credentials: HTTPAuthorizationCredentials = Depends(security)):
         raise HTTPException(status_code=401, detail="Invalid Token")
 
 
+@app.get("/")
+def root():
+    return {"message": "Go to the login page. Please."}
+
+
 @app.post("/login")
 def login(credentials: LoginReq):
     username = credentials.username
@@ -85,7 +87,6 @@ def login(credentials: LoginReq):
                         "id": user.get("id"),
                         "username": user.get("username"),
                         "role": user.get("role")}
-
     raise HTTPException(
         status_code=401, detail="Invalid Credentials")
 
@@ -96,7 +97,8 @@ def protected(user: str = Depends(verify_jwt)):
             "message2": "This route was protected by JWT."}
 
 
-@app.get("/")
-def root():
-    return {"message": "Go to the login page. Please.",
-            "message2": "Nah, I'm just kidding. You can stay if you want."}
+@app.get("/user")
+def user():
+    return {
+        "message": "Not implemented"
+    }

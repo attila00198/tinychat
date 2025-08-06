@@ -15,8 +15,20 @@ $router->get('/contact', function () {
 
 // Routes with parameters
 $router->get('/user/{id}', function ($id) {
-    $user = AuthController::getUser($id);
-    return view("profile", ["title" => "Profile", "user" => $user]);
+    if(!isset($_SESSION["user"])) {
+        header("location: /login");
+        exit(1);
+    }
+    $user = AuthController::getUser($_COOKIE["access_token"] || "");
+    if (!$user) {
+        $_SESSION["flash"] = ["error" => "[ERROR]: User can't be found."];
+        exit(1);
+    }
+    $data = [
+        "title" => "Profile",
+        "user_data" => $user
+    ];
+    return view("profile", $data);
 });
 
 // GET routes
@@ -36,7 +48,7 @@ $router->post('/login', function () {
 $router->post('/register', function () {
     echo "<h1>Register POST</h1>";
     echo "<p>Processing registration...</p>";
-    //AuthController::register();
+    //UserController::register();
 });
 
 $router->get("/logout", function () {

@@ -82,6 +82,6 @@ class AuthController
 
     public static function getUser(string $access_key): array
     {
-        return [];
+        return $_SESSION["user"];
     }
 }

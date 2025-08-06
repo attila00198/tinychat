@@ -44,7 +44,7 @@
                 <ul class="navbar-nav ms-auto">
                     <?php if (isset($_SESSION["user"])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile">Profile</a>
+                            <a class="nav-link" href="/user/<?= $_SESSION['user']['id'] ?? '1' ?>">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Logout</a>

@@ -15,11 +15,11 @@ $router->get('/contact', function () {
 
 // Routes with parameters
 $router->get('/user/{id}', function ($id) {
-    if(!isset($_SESSION["user"])) {
+    if (!isset($_SESSION["user"])) {
         header("location: /login");
         exit(1);
     }
-    $user = AuthController::getUser($_COOKIE["access_token"] || "");
+    $user = UserController::getUser($id);
     if (!$user) {
         $_SESSION["flash"] = ["error" => "[ERROR]: User can't be found."];
         exit(1);
@@ -38,6 +38,11 @@ $router->get("/login", function () {
 
 $router->get("/register", function () {
     return view("register");
+});
+
+$router->get("/chat", function () {
+    //TODO: Implement chat UI
+    echo "Not yet implemented!";
 });
 
 // POST routes

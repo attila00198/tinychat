@@ -1,4 +1,5 @@
-```mermaid
+%%{init: {"theme": "dark"}}%%
+
 graph TB
     %% Users and Frontend
     U1[👤 User 1] --> FE[🌐 Frontend<br/>PHP/HTML/JS]
@@ -14,23 +15,22 @@ graph TB
     API -->|Database Operations| DB[(🗄️ Database<br/>Users, Messages)]
     
     %% Data flow annotations
-    FE -.->|1. User logs in| API
-    API -.->|2. Returns JWT token| FE
-    FE -.->|3. Connect to chat<br/>with JWT| WS
-    WS -.->|4. Validate token| API
-    API -.->|5. Return user data| WS
-    WS -.->|6. User joins chat| WS
+    FE -.->|User logs in| API
+    API -.->|Returns JWT token| FE
+    FE -.->|Connect to chat<br/>with JWT| WS
+    WS -.->|Validate token| API
+    API -.->|Return user data| WS
+    WS -.->|User joins chat| WS
     
     %% Styling
-    classDef frontend fill:#e1f5fe
-    classDef api fill:#f3e5f5
-    classDef websocket fill:#e8f5e8
-    classDef database fill:#fff3e0
-    classDef user fill:#ffebee
-    
+    classDef frontend fill:#0288d1,color:#ffffff
+    classDef api fill:#7b1fa2,color:#ffffff
+    classDef websocket fill:#388e3c,color:#ffffff
+    classDef database fill:#f57c00,color:#ffffff
+    classDef user fill:#c62828,color:#ffffff
+
     class FE frontend
     class API api
     class WS websocket
     class DB database
     class U1,U2,U3 user
-```

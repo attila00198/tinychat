@@ -1,0 +1,38 @@
+%%{init: {"theme":"dark"}}%%
+graph TB
+    %% Users and Frontend
+    U1[👤 User 1] --> FE[🌐 Frontend\PHP HTML JS]
+    U2[👤 User 2] --> FE
+    U3[👤 User 3] --> FE
+    
+    %% Frontend connections
+    FE -->|HTTPS\Login Profile etc| API[🔧 API Server\FastAPI Python]
+    FE -->|WSS Secure WebSocket\Real-time chat| WS[💬 WebSocket Chat Server\Python WebSockets]
+    
+    %% Backend communication
+    WS -->|Local JWT Validation\Shared Secret Key| WS_Auth[🛡️ Auth Logic]
+    WS_Auth -->|Optional User Data Request| API
+    API -->|Database Ops| DB[(🗄️ Database\Users, Messages)]
+    WS -->|Store Messages| API
+
+    %% Data flow annotations
+    FE -.->|User logs in| API
+    API -.->|Returns JWT token| FE
+    FE -.->|Connect to chat with JWT| WS
+    WS -.->|Validate token locally| WS_Auth
+    WS_Auth -.->|If needed, request user data| API
+    WS -.->|Store chat messages via API| API
+    WS -.->|Broadcast messages to connected users| WS
+
+%% Styling
+    classDef frontend fill:#0288d1,color:#ffffff
+    classDef api fill:#7b1fa2,color:#ffffff
+    classDef websocket fill:#388e3c,color:#ffffff
+    classDef database fill:#f57c00,color:#ffffff
+    classDef user fill:#c62828,color:#ffffff
+
+    class FE frontend
+    class API api
+    class WS websocket
+    class DB database
+    class U1,U2,U3 user
